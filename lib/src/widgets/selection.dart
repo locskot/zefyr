@@ -113,14 +113,6 @@ class ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
     // TODO: implement bringIntoView
   }
 
-  @override
-  void hideToolbar() {
-    _didCaretTap = false; // reset double tap.
-    _toolbar?.remove();
-    _toolbar = null;
-    _toolbarController?.stop();
-  }
-
   static const Duration _kFadeDuration = Duration(milliseconds: 150);
 
   @override
@@ -318,6 +310,17 @@ class ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
 
   @override
   bool get selectAllEnabled => _scope.mode.canSelect;
+
+  @override
+  void userUpdateTextEditingValue(TextEditingValue value, SelectionChangedCause cause) {}
+
+  @override
+  void hideToolbar([bool hideHandles = true]) {
+    _didCaretTap = false; // reset double tap.
+    _toolbar?.remove();
+    _toolbar = null;
+    _toolbarController?.stop();
+  }
 }
 
 enum _SelectionHandlePosition { base, extent }

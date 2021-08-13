@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:keyboard_actions/external/platform_check/platform_check.dart';
 import 'package:notus/notus.dart';
 
 import 'editable_box.dart';
@@ -58,18 +59,10 @@ class _ZefyrLineState extends State<ZefyrLine> {
 
     if (scope.isEditable) {
       Color cursorColor;
-      switch (theme.platform) {
-        case TargetPlatform.iOS:
-        case TargetPlatform.macOS:
-          cursorColor ??= CupertinoTheme.of(context).primaryColor;
-          break;
-
-        case TargetPlatform.android:
-        case TargetPlatform.fuchsia:
-        case TargetPlatform.windows:
-        case TargetPlatform.linux:
-          cursorColor = theme.cursorColor;
-          break;
+      if (PlatformCheck.isIOS) {
+        cursorColor ??= CupertinoTheme.of(context).primaryColor;
+      } else {
+        cursorColor = theme.cursorColor;
       }
 
       content = EditableBox(

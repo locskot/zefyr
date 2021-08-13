@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:keyboard_actions/external/platform_check/platform_check.dart';
 import 'package:notus/notus.dart';
 
 import 'code.dart';
@@ -132,8 +133,7 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
   }
 
   TextSelectionControls defaultSelectionControls(BuildContext context) {
-    final platform = Theme.of(context).platform;
-    if (platform == TargetPlatform.iOS) {
+    if (PlatformCheck.isIOS) {
       return cupertinoTextSelectionControls;
     }
     return materialTextSelectionControls;

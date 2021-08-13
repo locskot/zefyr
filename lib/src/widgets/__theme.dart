@@ -223,22 +223,9 @@ class BlockTheme {
 
   /// Creates fallback theme for blocks.
   factory BlockTheme.fallback(BuildContext context) {
-    final themeData = Theme.of(context);
     final defaultTextStyle = DefaultTextStyle.of(context);
     final padding = const EdgeInsets.symmetric(vertical: 8.0);
-    String fontFamily;
-    switch (themeData.platform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
-        fontFamily = 'Menlo';
-        break;
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-      case TargetPlatform.windows:
-      case TargetPlatform.linux:
-        fontFamily = 'Roboto Mono';
-        break;
-    }
+    final fontFamily = 'Roboto Mono';
 
     return BlockTheme(
       bulletList: StyleTheme(padding: padding),

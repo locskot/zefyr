@@ -330,19 +330,7 @@ class AttributeTheme {
       BuildContext context, LineTheme defaultLineTheme) {
     final theme = Theme.of(context);
 
-    String monospaceFontFamily;
-    switch (theme.platform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
-        monospaceFontFamily = 'Menlo';
-        break;
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-        monospaceFontFamily = 'Roboto Mono';
-        break;
-      default:
-        throw UnimplementedError('Platform ${theme.platform} not implemented.');
-    }
+    final monospaceFontFamily = 'Roboto Mono';
 
     return AttributeTheme(
       bold: TextStyle(fontWeight: FontWeight.bold),

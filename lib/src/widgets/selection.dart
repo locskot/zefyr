@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:keyboard_actions/external/platform_check/platform_check.dart';
 import 'package:notus/notus.dart';
 import 'package:zefyr/util.dart';
 
@@ -75,18 +76,20 @@ class ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
   }
 
   void showToolbar() {
-    final toolbarOpacity = _toolbarController.view;
-    _toolbar = OverlayEntry(
-      builder: (context) => FadeTransition(
-        opacity: toolbarOpacity,
-        child: _SelectionToolbar(
-          selectionOverlay: this,
-          clipboardStatus: _clipboardStatus,
+    if (!PlatformCheck.isWeb) {
+      final toolbarOpacity = _toolbarController.view;
+      _toolbar = OverlayEntry(
+        builder: (context) => FadeTransition(
+          opacity: toolbarOpacity,
+          child: _SelectionToolbar(
+            selectionOverlay: this,
+            clipboardStatus: _clipboardStatus,
+          ),
         ),
-      ),
-    );
-    _overlay.insert(_toolbar);
-    _toolbarController.forward(from: 0.0);
+      );
+      _overlay.insert(_toolbar);
+      _toolbarController.forward(from: 0.0);
+    }
   }
 
   bool get isToolbarVisible => _toolbar != null;

@@ -185,7 +185,7 @@ class RenderEditableProxyBox extends RenderBox
   @override
   void attach(PipelineOwner owner) {
     super.attach(owner);
-    _showCursor.addListener(markNeedsCursorPaint);
+    _showCursor?.addListener(markNeedsCursorPaint);
     _renderContext.addBox(this);
     _renderContext.markDirty(this, _isDirty);
   }

@@ -282,7 +282,7 @@ class _ZefyrButtonListState extends State<ZefyrButtonList> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_handleScroll);
+    _controller?.addListener(_handleScroll);
     // Workaround to allow scroll controller attach to our ListView so that
     // we can detect if overflow arrows need to be shown on init.
     // TODO: find a better way to detect overflow

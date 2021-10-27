@@ -161,7 +161,7 @@ class _ZefyrEditorState extends State<ZefyrEditor> {
         focusNode: widget.focusNode,
         focusScope: FocusScope.of(context),
       );
-      _scope.addListener(_handleChange);
+      _scope?.addListener(_handleChange);
     } else {
       final focusScope = FocusScope.of(context);
       _scope.focusScope = focusScope;

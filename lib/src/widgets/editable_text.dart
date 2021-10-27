@@ -198,7 +198,7 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
     if (_renderContext != scope.renderContext) {
       _renderContext?.removeListener(_handleRenderContextChange);
       _renderContext = scope.renderContext;
-      _renderContext.addListener(_handleRenderContextChange);
+      _renderContext?.addListener(_handleRenderContextChange);
     }
     if (_cursorTimer != scope.cursorTimer) {
       _cursorTimer?.stop();
@@ -267,19 +267,19 @@ class _ZefyrEditableTextState extends State<ZefyrEditableText>
 
   void _updateSubscriptions([ZefyrEditableText oldWidget]) {
     if (oldWidget == null) {
-      widget.controller.addListener(_handleLocalValueChange);
-      _focusNode.addListener(_handleFocusChange);
+      widget.controller?.addListener(_handleLocalValueChange);
+      _focusNode?.addListener(_handleFocusChange);
       return;
     }
 
     if (widget.controller != oldWidget.controller) {
       oldWidget.controller.removeListener(_handleLocalValueChange);
-      widget.controller.addListener(_handleLocalValueChange);
+      widget.controller?.addListener(_handleLocalValueChange);
       _input.updateRemoteValue(widget.controller.plainTextEditingValue);
     }
     if (widget.focusNode != oldWidget.focusNode) {
       oldWidget.focusNode.removeListener(_handleFocusChange);
-      widget.focusNode.addListener(_handleFocusChange);
+      widget.focusNode?.addListener(_handleFocusChange);
       updateKeepAlive();
     }
   }

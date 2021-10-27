@@ -138,7 +138,7 @@ class ZefyrSelectionOverlayState extends State<ZefyrSelectionOverlay>
     if (_scope != scope) {
       _scope?.removeListener(_handleChange);
       _scope = scope;
-      _scope.addListener(_handleChange);
+      _scope?.addListener(_handleChange);
       _selection = _scope.selection;
       _focusOwner = _scope.focusOwner;
     }
@@ -379,7 +379,7 @@ class _SelectionHandleDriverState extends State<SelectionHandleDriver>
     if (_scope != scope) {
       _scope?.removeListener(_handleScopeChange);
       _scope = scope;
-      _scope.addListener(_handleScopeChange);
+      _scope?.addListener(_handleScopeChange);
     }
     _selection = _scope.selection;
   }

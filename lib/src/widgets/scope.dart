@@ -53,8 +53,8 @@ class ZefyrScope extends ChangeNotifier {
         _renderContext = ZefyrRenderContext() {
     _selectionStyle = _controller.getSelectionStyle();
     _selection = _controller.selection;
-    _controller.addListener(_handleControllerChange);
-    _focusNode.addListener(_handleFocusChange);
+    _controller?.addListener(_handleControllerChange);
+    _focusNode?.addListener(_handleFocusChange);
   }
 
   static ZefyrScope of(BuildContext context) {
@@ -91,7 +91,7 @@ class ZefyrScope extends ChangeNotifier {
       _controller = value;
       _selectionStyle = _controller.getSelectionStyle();
       _selection = _controller.selection;
-      _controller.addListener(_handleControllerChange);
+      _controller?.addListener(_handleControllerChange);
       notifyListeners();
     }
   }
@@ -103,7 +103,7 @@ class ZefyrScope extends ChangeNotifier {
     if (_focusNode != value) {
       _focusNode.removeListener(_handleFocusChange);
       _focusNode = value;
-      _focusNode.addListener(_handleFocusChange);
+      _focusNode?.addListener(_handleFocusChange);
       notifyListeners();
     }
   }

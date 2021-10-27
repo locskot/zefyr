@@ -116,9 +116,9 @@ class RenderEditableProxyBox extends RenderBox
   set showCursor(ValueNotifier<bool> value) {
     assert(value != null);
     if (_showCursor == value) return;
-    if (attached) _showCursor.removeListener(markNeedsCursorPaint);
+    if (attached) _showCursor?.removeListener(markNeedsCursorPaint);
     _showCursor = value;
-    if (attached) _showCursor.addListener(markNeedsCursorPaint);
+    if (attached) _showCursor?.addListener(markNeedsCursorPaint);
     markNeedsPaint();
   }
 

@@ -49,7 +49,6 @@ class InputConnectionController implements TextInputClient {
       )
         ..show()
         ..setEditingState(value);
-      _sentRemoteValues.add(value);
     } else {
       _textInputConnection.show();
     }
@@ -61,7 +60,6 @@ class InputConnectionController implements TextInputClient {
       _textInputConnection.close();
       _textInputConnection = null;
       _lastKnownRemoteTextEditingValue = null;
-      _sentRemoteValues.clear();
     }
   }
 
@@ -84,13 +82,8 @@ class InputConnectionController implements TextInputClient {
 
     if (actualValue == _lastKnownRemoteTextEditingValue) return;
 
-    final shouldRemember = value.text != _lastKnownRemoteTextEditingValue.text;
     _lastKnownRemoteTextEditingValue = actualValue;
     _textInputConnection.setEditingState(actualValue);
-    if (shouldRemember) {
-      // Only keep track if text changed (selection changes are not relevant)
-      _sentRemoteValues.add(actualValue);
-    }
   }
 
   //
@@ -104,22 +97,6 @@ class InputConnectionController implements TextInputClient {
 
   @override
   void updateEditingValue(TextEditingValue value) {
-    if (_sentRemoteValues.contains(value)) {
-      /// There is a race condition in Flutter text input plugin where sending
-      /// updates to native side too often results in broken behavior.
-      /// TextInputConnection.setEditingValue is an async call to native side.
-      /// For each such call native side _always_ sends update which triggers
-      /// this method (updateEditingValue) with the same value we've sent it.
-      /// If multiple calls to setEditingValue happen too fast and we only
-      /// track the last sent value then there is no way for us to filter out
-      /// automatic callbacks from native side.
-      /// Therefore we have to keep track of all values we send to the native
-      /// side and when we see this same value appear here we skip it.
-      /// This is fragile but it's probably the only available option.
-      _sentRemoteValues.remove(value);
-      return;
-    }
-
     if (_lastKnownRemoteTextEditingValue == value) {
       // There is no difference between this value and the last known value.
       return;
@@ -176,7 +153,6 @@ class InputConnectionController implements TextInputClient {
       _textInputConnection.connectionClosedReceived();
       _textInputConnection = null;
       _lastKnownRemoteTextEditingValue = null;
-      _sentRemoteValues.clear();
     }
   }
 
@@ -184,7 +160,6 @@ class InputConnectionController implements TextInputClient {
   // Private members
   //
 
-  final List<TextEditingValue> _sentRemoteValues = [];
   TextInputConnection _textInputConnection;
   TextEditingValue _lastKnownRemoteTextEditingValue;
 
